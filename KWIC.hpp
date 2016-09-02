@@ -24,10 +24,15 @@ public:
     // Llega una linea, se tokeniza y se generan todas las permutaciones, cada permutacion
     // se agrega a Index y se sortea de nuevo de acuerdo sortMethod
     void AddLine(std::string line);
+    
+    void ReadStream();
     std::string CalculateIndex();
     
 private:
-    std::string sortMethod;
+    std::string inputStream;
     std::string shiftMethod;
+    std::string sortMethod;
+    
+    
     std::vector<std::vector<std::string> > Index;
 };

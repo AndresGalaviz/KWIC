@@ -9,6 +9,7 @@
 #include "KWIC.hpp"
 #include <algorithm>
 #include <iostream>
+#include <fstream>
 
 KWIC::KWIC()
 {
@@ -17,9 +18,59 @@ KWIC::KWIC()
 
 KWIC::KWIC(std::string inputStream, std::string sortMethod, std::string shiftMethod)
 {
-    if(inputStream == "cin")
+
+    this->inputStream = inputStream;
+    this->sortMethod = sortMethod;
+    this->shiftMethod = shiftMethod;
+}
+
+void KWIC::AddLine(std::string inputLine)
+{
+    int currentLocation = 0, pastLocation = 0;
+    std::vector<std::string> lineIndex;
+    while(currentLocation <= inputLine.length())
     {
-        std::string currentLine;
+        if(inputLine[currentLocation] == ' ' || currentLocation == inputLine.length())
+        {
+            lineIndex.push_back(inputLine.substr(pastLocation, currentLocation-pastLocation));
+            pastLocation = currentLocation + 1;
+        }
+        currentLocation++;
+    }
+    
+    Index.push_back(lineIndex);
+}
+
+std::string KWIC::CalculateIndex()
+{
+    std::string output;
+    for(int i = 0; i < this->Index.size(); ++i)
+    {
+        
+        do
+        {
+            int j;
+            for(j = 0; j < this->Index[i].size() - 1; ++j)
+            {
+                output+= Index[i][j];
+                output+= " ";
+            }
+            output+= Index[i][j];
+            output+= "\n";
+        } while(std::next_permutation(Index[i].begin(), Index[i].end()));
+        // Lo probe con permutation pero hay que cambiarlo
+    }
+    
+    return output;
+}
+
+void KWIC::ReadStream()
+{
+    std::ifstream input;
+    std::string currentLine;
+    if(this->inputStream == "cin")
+    {
+        
         while(getline(std::cin, currentLine))
         {
             AddLine(currentLine);
@@ -27,31 +78,12 @@ KWIC::KWIC(std::string inputStream, std::string sortMethod, std::string shiftMet
     }
     else
     {
+        std::ifstream inputFile(this->inputStream);
         
-        
-    }
-    
-    CalculateIndex();
-}
-
-void KWIC::AddLine(std::string inputLine)
-{
-    int currentLocation = 1, pastLocation = 1;
-    std::vector<std::string> lineIndex;
-    while(inputLine[currentLocation] != '\n')
-    {
-        if(inputLine[currentLocation] == ' ' || inputLine[currentLocation] == '\"')
+        while(getline(inputFile, currentLine))
         {
-            std::cout <<inputLine.substr(pastLocation, currentLocation-currentLocation-1) << " ";
-            lineIndex.push_back(inputLine.substr(pastLocation, currentLocation-currentLocation-1));
-            pastLocation = currentLocation;
+            AddLine(currentLine);
         }
-        currentLocation++;
     }
-    std::cout << "\n";
-}
 
-std::string KWIC::CalculateIndex()
-{
-    return " ";
 }

@@ -57,16 +57,10 @@ int main(int argc, char *argv[])
     
     
     indexSystem = new KWIC(inputStream, sortMethod, shiftMethod);
-    
+    indexSystem->ReadStream();
+    std::cout << "Calculated" << std::endl;
     std::string oddutput = indexSystem->CalculateIndex();
-    
-    // Printer printer = new Printer();
-    // std::string output = indexSystem.CalculateIndex();
-    // printer.print(output,)
-    // std::string currentLine;
-    // KWIC *indexSystem = new KWIC();
-    
-    // indexSystem->CalculateIndexOutput();
-    // indexSystem->PrintIndexOutput();
+    std::cout<<oddutput;
+
     
 }
