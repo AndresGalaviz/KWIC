@@ -11,8 +11,8 @@ int main(int argc, char *argv[])
     
     std::string sortMethod = "asc";
     std::string shiftMethod = "circular";
-    std::string output = "cout";
-    std::string input = "cin";
+    std::string outputStream = "cout";
+    std::string inputStream = "cin";
     
     if(argc > 1)
     {
@@ -28,11 +28,11 @@ int main(int argc, char *argv[])
                 {
                     case 'i':
                         ++i;
-                        input = std::string(argv[i]);
+                        inputStream = std::string(argv[i]);
                         break;
                     case 'o':
                         ++i;
-                        output = std::string(argv[i]);
+                        outputStream = std::string(argv[i]);
                         break;
                     case 's':
                         ++i;
@@ -55,9 +55,10 @@ int main(int argc, char *argv[])
         }
     }
     
-    indexSystem = new KWIC();
-    // indexSystem = new KWIC(std::string(argv[1]), sortMethod, shiftMethod);
-    // indexSystem = new KWIC(input, sortMethod, shiftMethod);
+    
+    indexSystem = new KWIC(inputStream, sortMethod, shiftMethod);
+    
+    std::string oddutput = indexSystem->CalculateIndex();
     
     // Printer printer = new Printer();
     // std::string output = indexSystem.CalculateIndex();

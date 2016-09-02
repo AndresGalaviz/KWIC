@@ -19,7 +19,7 @@ public:
     KWIC();
     
     // sortMethod = 'asc' | 'desc'
-    KWIC(std::string input, std::string sortMethod, std::string shiftMethod);
+    KWIC(std::string inputStream, std::string sortMethod, std::string shiftMethod);
     
     // Llega una linea, se tokeniza y se generan todas las permutaciones, cada permutacion
     // se agrega a Index y se sortea de nuevo de acuerdo sortMethod
