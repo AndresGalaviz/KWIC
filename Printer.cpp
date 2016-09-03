@@ -12,14 +12,32 @@
 #include <string>
 
 
-void Printer::print (std::string buffer, std::string filedsc){
+void Printer::print(std::vector<std::string> output, std::string outputLocation)
+{
     std::ofstream file;
+    if(outputLocation != "cout")
+    {
+        file.open(outputLocation);
+    }
     
-    if(filedsc.compare("stdout") == 0){
-        std::cout << buffer;
-    }else{
-        file.open(filedsc);
-        file << buffer;
+    for(int i = 0; i < output.size(); ++i)
+    {
+        
+        if(outputLocation == "cout")
+        {
+            std::cout << output[i];
+        }
+        else
+        {
+            
+            file << output[i];
+        }
+    }
+
+    
+    if(file.is_open())
+    {
         file.close();
     }
+    
 }

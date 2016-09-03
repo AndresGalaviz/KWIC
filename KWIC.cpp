@@ -11,9 +11,12 @@
 #include <iostream>
 #include <fstream>
 
+
 KWIC::KWIC()
 {
-    
+    this->inputStream = "cin";
+    this->sortMethod = "asc";
+    this->shiftMethod = "circular";
 }
 
 KWIC::KWIC(std::string inputStream, std::string sortMethod, std::string shiftMethod)
@@ -41,25 +44,51 @@ void KWIC::AddLine(std::string inputLine)
     Index.push_back(lineIndex);
 }
 
-std::string KWIC::CalculateIndex()
+std::vector<std::string> KWIC::CalculateIndex()
 {
-    std::string output;
+    std::vector<std::string> output;
     for(int i = 0; i < this->Index.size(); ++i)
     {
         
-        do
+        for(int j = 0; j < this->Index[i].size(); ++j)
         {
-            int j;
-            for(j = 0; j < this->Index[i].size() - 1; ++j)
+            if(this->shiftMethod == "circular")
             {
-                output+= Index[i][j];
-                output+= " ";
+            
+                int currIndex = j;
+                std::string currentLine;
+                do
+                {
+                    std::string data = Index[i][currIndex];
+                    std::transform(data.begin(), data.end(), data.begin(), ::tolower);
+                    currentLine += data;
+                    currIndex++;
+                    currIndex = currIndex%this->Index[i].size();
+                    if(currIndex != j)
+                    {
+                        currentLine += " ";
+                    }
+                    else
+                    {
+                        currentLine += "\n";
+                    }
+
+                    
+                } while(currIndex != j);
+                output.push_back(currentLine);
             }
-            output+= Index[i][j];
-            output+= "\n";
-        } while(std::next_permutation(Index[i].begin(), Index[i].end()));
-        // Lo probe con permutation pero hay que cambiarlo
+        }
     }
+    
+    if(this->sortMethod == "des")
+    {
+        sort(output.begin(), output.end(), std::greater<std::string>());
+    }
+    else
+    {
+        sort(output.begin(), output.end());
+    }
+    
     
     return output;
 }

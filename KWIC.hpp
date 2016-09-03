@@ -26,7 +26,7 @@ public:
     void AddLine(std::string line);
     
     void ReadStream();
-    std::string CalculateIndex();
+    std::vector<std::string> CalculateIndex();
     
 private:
     std::string inputStream;

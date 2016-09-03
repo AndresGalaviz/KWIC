@@ -13,6 +13,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <vector>
 #endif /* Printer_hpp */
 
 
@@ -20,5 +21,5 @@
 
 class Printer{
 public:
-    void print(std::string buffer, std::string filedsc);
+    void print(std::vector<std::string> output, std::string outputLocation);
 };
